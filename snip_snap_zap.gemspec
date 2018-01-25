@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tommy Bregar"]
   spec.email         = ["tommybregar@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Schedule snapshots of your models as they exist in the database.}
+  spec.description   = %q{Using recurring delayed jobs take scheduled snapshots of your models. Filter down to the attributes and associations which matter to you.}
+  spec.homepage      = "https://github.com/dudemanvox/snip-snap-zap"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
