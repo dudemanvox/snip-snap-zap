@@ -1,0 +1,35 @@
+.row
+  .col-sm-10.col-sm-offset-1.text-left
+    %h4 Filter By:
+    - @klasses.each do |type|
+      = link_to type, snip_snap_zap_snap_schedules_path(filter: {schedulable_type: type}), class: ['btn', (params[:filter] && params[:filter][:schedulable_type] == type ? 'btn-primary' : 'btn-default')]
+
+- if @snap_schedules
+  .row{style: "margin-top: 25px;"}
+    .col-sm-10.col-sm-offset-1
+      %table.table.table-striped
+        %tr
+          %th.text-left
+            Tracking
+          %th.text-left
+            Active?
+          %th.text-left
+            Watched Attributes
+          %th.text-left
+            Stop When
+          %th.text-left
+            Actions
+
+        - if @snap_schedules
+          - @snap_schedules.each do |schedule|
+            %tr
+              %td
+                = "#{schedule.schedulable_type} #{schedule.schedulable_id}"
+              %td
+                = schedule.active
+              %td
+                = schedule.snipable_attributes.to_yaml
+              %td
+                = schedule.stoppable_attributes.to_yaml
+              %td
+                = link_to schedule.schedulable_id, snip_snap_zap_snap_schedule_snip_snaps_path(schedule)

@@ -1,0 +1,37 @@
+.row
+  .col-sm-10.col-sm-offset-1.text-left
+    - @klasses.each do |type|
+      = link_to type, snip_snap_zap_snap_schedules_path(filter: {schedulable_type: type}), class: ['btn', (@snap_schedule.schedulable_type == type ? 'btn-primary' : 'btn-default')]
+
+.row{style: "margin-top: 25px;"}
+  .col-sm-10.col-sm-offset-1
+    %table.table.table-striped
+      %tr
+        %th.text-left{colspan: "100"}
+          = "#{@snap_schedule.schedulable_type} #{@snap_schedule.schedulable_id}"
+      %tr
+        %th.text-left
+          ID
+        %th.text-left
+          Version
+        %th.text-left
+          Previous Attributes
+        %th.text-left
+          Modified Attributes
+        %th.text-left
+          Updated
+        %th.text-left
+          Actions
+      - @snip_snaps.each do |snap|
+        %tr
+          %td
+            = snap.id
+          %td
+            = snap.version
+          %td
+            = snap.previous_attributes.present? ? snap.previous_attributes.to_yaml : "----"
+          %td
+            = snap.modified_attributes.to_yaml
+          %td
+            = snap.updated_at.strftime("%m-%d-%y %l:%M%p")
+          %td
