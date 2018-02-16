@@ -48,9 +48,9 @@ module SnipSnapZap
       # See if the stoppable attributes have been met
       def check_for_stop
         return unless snap_schedule.stoppable_attributes.present?
-        puts snap_schedule.stoppable_attributes.first.inspect
-        puts self.snapable.attributes.slice(*snap_schedule.stoppable_attributes.first.keys).inspect
-        if snap_schedule.stoppable_attributes.first == self.snapable.attributes.slice(*snap_schedule.stoppable_attributes.first.keys)
+        puts snap_schedule.stoppable_attributes.first.stringify_keys.inspect
+        puts self.snapable.attributes.slice(*snap_schedule.stoppable_attributes.first.stringify_keys.keys).inspect
+        if snap_schedule.stoppable_attributes.first.stringify_keys == self.snapable.attributes.slice(*snap_schedule.stoppable_attributes.first.stringify_keys.keys)
           self.snap_schedule.update_column(:active, false)
         end
       end
