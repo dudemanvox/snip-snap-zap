@@ -20,7 +20,9 @@
             %th
             %th= project.project_number
             - schedule.snipable_attributes.select{|a| a != :updated_at}.each do |key, val|
-              - timestamp = schedule.snip_snaps.last.modified_attributes[key]
+              - last_snap = schedule.snip_snaps.last
+              - timestamp = last_snap.modified_attributes[key] if last_snap.present?
+              - timestamp ||= nil
               - if timestamp
                 %td.bg-success.text-center= schedule.snip_snaps.last.modified_attributes[key].in_time_zone("Mountain Time (US & Canada)").strftime("%_m/%d/%Y - %l:%M %p")
               - else
