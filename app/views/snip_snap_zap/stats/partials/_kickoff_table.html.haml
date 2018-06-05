@@ -1,0 +1,31 @@
+- people.map(&:personTitle).uniq.each do |title|
+  %h4= title.pluralize
+
+  %table.table.table-stripped
+    - people.select{|p| p.personTitle == title}.each do |person|
+      = render partial: 'snip_snap_zap/stats/partials/person_header_row', locals: {person: person}
+
+      - projects_for_person = @projects.select{|p| p.personnel?(person) }
+
+      - if projects_for_person.present?
+        %tr
+          %th
+          %th
+          - @schedules.first.snipable_attributes.select{|a| a != :updated_at}.each do |key, val|
+            %th= key.to_s.split("_").map(&:capitalize).join(" ")
+
+        - @projects.select{|p| p.personnel?(person) }.each do |project|
+          - schedule = @schedules.find{|sch| sch.schedulable.project_number.to_s == project.project_number}
+          %tr
+            %th
+            %th= project.project_number
+            - schedule.snipable_attributes.select{|a| a != :updated_at}.each do |key, val|
+              - timestamp = schedule.snip_snaps.last.modified_attributes[key]
+              - if timestamp
+                %td.bg-success.text-center= schedule.snip_snaps.last.modified_attributes[key].in_time_zone("Mountain Time (US & Canada)").strftime("%_m/%d/%Y - %l:%M %p")
+              - else
+                %td.bg-danger.text-center.bold Incomplete
+      - else
+        %tr
+          %th
+          %th.bg-warning.bold{colspan: 100} No records for this person

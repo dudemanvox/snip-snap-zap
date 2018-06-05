@@ -1,0 +1,15 @@
+%h1 Project Kickoff Stats
+
+%br
+
+= render partial: 'snip_snap_zap/stats/partials/kickoff_table', locals: {people: @people}
+
+/ = debug @schedules.length
+
+/ = debug @schedules.map{|sch| sch.snip_snaps.length}
+
+/ = debug @schedules.map{|sch| sch.schedulable.class.name}
+
+/ = debug @schedules.map{|sch| sch.schedulable.project_number}
+
+/ = debug @schedules.map{|sch| sch.schedulable.project.projectName}

@@ -31,6 +31,8 @@ module SnipSnapZap
     scope :uniq_types, ->{ select("DISTINCT(schedulable_type)") }
     scope :uniq_ids_for_type, ->(type){ select("DISTINCT(schedulable_id)").where(schedulable_type: type) }
 
+    scope :project_kickoffs, ->{ where(schedulable_type: "ProjectSetup") }
+
     def run_at
       start_at.strftime("%I:%M%p")
     end

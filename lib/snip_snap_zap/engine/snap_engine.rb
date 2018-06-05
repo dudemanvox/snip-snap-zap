@@ -5,14 +5,6 @@ module SnipSnapZap::Engine
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    def self.activate
-      Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")).each do |c|
-        Rails.configuration.cache_classes ? require(c) : load(c)
-      end
-    end
-
-    config.to_prepare &method(:activate).to_proc
-
     # Because development doesn't play nicely 100% of the time with serialized columns
     # Sometimes they are returned as YAML strings rather than the unserialized object
     if Rails.env.development?
@@ -30,6 +22,14 @@ module SnipSnapZap::Engine
           end
           # require_dependency 'article_cache'
       end
+
+      def self.activate
+        Dir.glob(File.join(root, "/app/**/*_decorator*.rb")).each do |c|
+          Rails.configuration.cache_classes ? require(c) : load(c)
+        end
+      end
+
+      config.to_prepare &method(:activate).to_proc
     end
   end # Engine
 end
